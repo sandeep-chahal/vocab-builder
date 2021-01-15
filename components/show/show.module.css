@@ -1,0 +1,56 @@
+.showWrapper {
+	position: relative;
+	width: 200px;
+	height: 300px;
+	display: flex;
+	flex-direction: column-reverse;
+	cursor: pointer;
+	margin: 0 1rem 3rem 1rem;
+	font-size: 1.6rem;
+}
+
+.poster {
+	width: 100%;
+	position: absolute;
+	z-index: 0;
+}
+
+.info {
+	z-index: 10;
+	justify-self: baseline;
+	background: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0.7) 60%
+	);
+	color: #fff;
+	padding: 10px 5px;
+	transition: all 0.2s ease;
+}
+
+.name {
+	margin-bottom: 5px;
+}
+
+.space {
+	height: 30px;
+	width: 100%;
+}
+
+.ratingLogo {
+	margin-right: 0.8rem;
+	transition: all 0.2s ease;
+}
+.showWrapper:hover .info {
+	color: var(--color-secondary);
+}
+.showWrapper:hover .ratingLogo path {
+	stroke: var(--color-secondary);
+}
+
+@media (max-width: 400px) {
+	.showWrapper {
+		width: 80%;
+		height: 400px;
+	}
+}
