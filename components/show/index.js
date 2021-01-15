@@ -2,7 +2,7 @@ import styles from "./show.module.css";
 
 const Show = ({ show, select }) => {
 	return (
-		<div className={styles.showWrapper} onClick={() => select(show.id)}>
+		<div className={styles.showWrapper} onClick={() => select(show)}>
 			<img
 				className={styles.poster}
 				src={`https://image.tmdb.org/t/p/w500/${show.poster_path}`}

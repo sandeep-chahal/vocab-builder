@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { getShowInfo } from "../../utils/fetch";
 import styles from "./showSelector.module.css";
 
-const ShowSelector = ({ showId, cancel }) => {
+const ShowSelector = ({ name, showId, cancel }) => {
 	const [totalSeasons, setTotalSeasons] = useState(null);
 	const [season, setSeason] = useState(100);
 	const [episode, setEpisode] = useState(100);
@@ -12,6 +12,7 @@ const ShowSelector = ({ showId, cancel }) => {
 	useEffect(() => {
 		(async () => {
 			const seasons = await getShowInfo(showId);
+			if (seasons === null) return alert("something went wrong");
 			// if user selected wrong season and episode number already
 			if (!(season > 0) || !(season <= seasons.length)) {
 				setSeason(1);
@@ -63,7 +64,7 @@ const ShowSelector = ({ showId, cancel }) => {
 						Cancel
 					</button>
 					<button
-						onClick={() => router.push(`/${showId}/${season}/${episode}`)}
+						onClick={() => router.push(`/${name}/${season}/${episode}`)}
 						className={styles.button}
 					>
 						Submit

@@ -1,0 +1,30 @@
+.wordList {
+	font-size: 1.8rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.word {
+	display: block;
+	padding: 1rem 2rem;
+	margin: 1rem;
+	width: 20%;
+	background: rgb(17, 17, 17);
+}
+
+@media (max-width: 1000px) {
+	.word {
+		width: 30%;
+	}
+}
+@media (max-width: 700px) {
+	.word {
+		width: 45%;
+	}
+}
+@media (max-width: 600px) {
+	.word {
+		width: 80%;
+	}
+}

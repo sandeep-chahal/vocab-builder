@@ -8,13 +8,18 @@ import ShowSelector from "../components/showSelector";
 
 export default function Home({ shows }) {
 	const [selected, setSelected] = useState(null);
+
 	return (
 		<div className={styles.container}>
 			<Head>
 				<title>Learn Vocabulary Words</title>
 			</Head>
 			{selected && (
-				<ShowSelector showId={selected} cancel={() => setSelected(null)} />
+				<ShowSelector
+					name={selected.name || selected.original_name}
+					showId={selected.id}
+					cancel={() => setSelected(null)}
+				/>
 			)}
 			<section>
 				<h2 className={styles.heading}>Trending Shows</h2>

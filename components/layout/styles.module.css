@@ -22,3 +22,14 @@
 	border-radius: 100px;
 	border: 1rem solid var(--color-secondary);
 }
+
+@media (max-width: 700px) {
+	.header {
+		font-size: 1.6rem;
+	}
+	.logo {
+		width: 3rem;
+		height: 3rem;
+		border: 0.8rem solid var(--color-secondary);
+	}
+}
