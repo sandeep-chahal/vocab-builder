@@ -1,7 +1,6 @@
 .showWrapper {
 	position: relative;
 	width: 200px;
-	height: 300px;
 	display: flex;
 	flex-direction: column-reverse;
 	cursor: pointer;
@@ -11,11 +10,11 @@
 
 .poster {
 	width: 100%;
-	position: absolute;
-	z-index: 0;
 }
 
 .info {
+	position: absolute;
+	width: 100%;
 	z-index: 10;
 	justify-self: baseline;
 	background: linear-gradient(
@@ -48,9 +47,11 @@
 	stroke: var(--color-secondary);
 }
 
-@media (max-width: 400px) {
-	.showWrapper {
-		width: 80%;
-		height: 400px;
+@media (max-width: 600px) {
+	.showWrapper:hover .info {
+		color: #fff;
+	}
+	.showWrapper:hover .ratingLogo path {
+		stroke: #fff;
 	}
 }
