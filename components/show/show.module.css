@@ -48,6 +48,10 @@
 }
 
 @media (max-width: 600px) {
+	.showWrapper {
+		width: 100%;
+	}
+
 	.showWrapper:hover .info {
 		color: #fff;
 	}

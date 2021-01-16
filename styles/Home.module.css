@@ -19,6 +19,9 @@
 	.heading {
 		font-size: 2rem;
 		margin-bottom: 1.5rem;
-		padding-left: 0rem;
+		padding-left: 0;
+	}
+	.container {
+		width: 80%;
 	}
 }

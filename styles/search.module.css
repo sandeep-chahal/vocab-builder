@@ -1,0 +1,41 @@
+.searchWrapper {
+	width: 80%;
+	margin: auto;
+	margin-top: 5rem;
+	background-color: rgba(17, 17, 17);
+	padding: 2rem 1rem 3rem;
+}
+.inputWrapper {
+	width: 60%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	background-color: rgba(15, 15, 15);
+}
+.input {
+	width: 100%;
+	padding: 5px 10px;
+}
+.meta {
+	margin-top: 2rem;
+	font-size: 1.5rem;
+	margin: auto;
+}
+.searchList {
+	margin-top: 3rem;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+	.searchList {
+		margin-top: 3rem;
+	}
+	.searchWrapper {
+		width: 90%;
+		margin-top: 0;
+	}
+	.inputWrapper {
+		width: 90%;
+	}
+}

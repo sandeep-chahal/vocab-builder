@@ -8,3 +8,14 @@ export const getShowInfo = async (id) => {
 		return null;
 	}
 };
+
+export const searchShows = async (query) => {
+	try {
+		const req = await fetch("/api/search?query=" + query);
+		const res = await req.json();
+		return res.data;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};

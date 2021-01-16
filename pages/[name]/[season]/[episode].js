@@ -1,9 +1,10 @@
 import { useState } from "react";
+import Head from "next/head";
 import getEpisodeData from "../../../services/getEpisodeData";
 import styles from "../../../styles/dashboard.module.css";
 import DefinitionModal from "../../../components/definitionModal";
 
-const Dashboard = ({ error, subtitles, words }) => {
+const Dashboard = ({ error, subtitles, words, name }) => {
 	if (error) {
 		return <div>Something Went Wrong</div>;
 	}
@@ -11,11 +12,16 @@ const Dashboard = ({ error, subtitles, words }) => {
 	const wordsList = Object.keys(words);
 
 	const handleGetDefinition = (e) => {
-		setSelectedWord(e.target.textContent);
+		if (e.target.id != "word") return;
+		const word = e.target.textContent;
+		setSelectedWord(word);
 	};
 
 	return (
 		<div className={styles.dashboard}>
+			<Head>
+				<title>{name}</title>
+			</Head>
 			{selectedWord && (
 				<DefinitionModal
 					word={selectedWord}
@@ -24,7 +30,7 @@ const Dashboard = ({ error, subtitles, words }) => {
 			)}
 			<ul className={styles.wordList} onClick={handleGetDefinition}>
 				{wordsList.map((word) => (
-					<li key={word} className={styles.word}>
+					<li id="word" key={word} className={styles.word}>
 						{word}
 					</li>
 				))}
@@ -34,13 +40,14 @@ const Dashboard = ({ error, subtitles, words }) => {
 };
 
 export const getServerSideProps = async (context) => {
-	const { showId, season, episode } = context.query;
+	const { name, season, episode } = context.query;
 	console.log(context.query);
-	let result = await getEpisodeData(showId, season, episode);
+	let result = await getEpisodeData(name, season, episode);
 	return {
 		props: {
 			error: result === null,
 			...(result || {}),
+			name,
 		},
 	};
 };

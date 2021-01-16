@@ -73,7 +73,7 @@ export default async (name, season, episode) => {
 		if (text === null) return null;
 		let subtitle = filterSubtitles(text);
 		let words = getWords(subtitle);
-		return { subtitle, words };
+		return { words };
 	} catch (err) {
 		console.log("-".repeat(25), "getEpisodeData", "-".repeat(25));
 		console.log(err.message);
