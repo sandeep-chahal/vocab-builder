@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Head from "next/head";
 import styles from "../styles/search.module.css";
 import Show from "../components/show";
@@ -6,8 +6,8 @@ import { searchShows } from "../utils/fetch";
 import Storage from "../utils/storage";
 
 const Search = () => {
+	const input = useRef(null);
 	const [loading, setLoading] = useState(false);
-	const [query, setQuery] = useState("");
 	const [searchedItems, setSearchedItems] = useState(null);
 	const [history, setHistory] = useState([]);
 
@@ -17,14 +17,18 @@ const Search = () => {
 
 	const handleSearch = async (e) => {
 		e.preventDefault();
+		const query = input.current.value;
 		if (query.trim().length < 3) return;
+		input.current.blur();
+		setLoading(true);
 		Storage.set("search-history", query, 5);
 		const shows = await searchShows(query);
 		setSearchedItems(shows);
 		setHistory((h) => {
 			h.unshift(query);
-			return h;
+			return Array.from(new Set(h));
 		});
+		setLoading(false);
 	};
 
 	return (
@@ -39,15 +43,15 @@ const Search = () => {
 					spellCheck={true}
 					className={styles.input}
 					type="text"
-					value={query}
-					onChange={(e) => setQuery(e.target.value)}
+					ref={input}
 				/>
 				<datalist id="search-history">
 					{history && history.map((h) => <option key={h} value={h} />)}
 				</datalist>
 			</form>
 			<div className={styles.searchList}>
-				{searchedItems && searchedItems.length
+				{loading && <div className={styles.meta}>Searching...</div>}
+				{searchedItems && searchedItems.length && !loading
 					? searchedItems.map((item) => <Show key={item.id} show={item} />)
 					: null}
 
