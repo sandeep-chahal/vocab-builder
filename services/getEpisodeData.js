@@ -1,19 +1,12 @@
 import OS from "opensubtitles-api";
-import Typo from "typo-js";
 import ignoreWords from "../config/ignorewords.json";
-import path from "path";
-console.log(path.resolve("..", "config"));
-const dictionary = new Typo("en_US", false, false, {
-	dictionaryPath: "config",
+import getDictionary from "../utils/dictionary";
+const dictionary = getDictionary();
+
+const OpenSubtitles = new OS({
+	useragent: process.env.USERAGENT,
 });
 
-const OpenSubtitles = new OS(process.env.USERAGENT);
-OpenSubtitles.login(
-	process.env.USERNAME,
-	process.env.PASSWORD,
-	"en",
-	process.env.USERAGENT
-);
 const filterSubtitles = (text) => {
 	return text
 		.split("\n")
@@ -49,7 +42,7 @@ const getWords = (subtitles) => {
 	return words;
 };
 
-export default async (name, season, episode) => {
+const getSubtitles = async (name, season, episode) => {
 	try {
 		await OpenSubtitles.login(
 			process.env.USERNAME,
@@ -66,11 +59,24 @@ export default async (name, season, episode) => {
 		});
 		const rawSub = await fetch(res.en[0].url);
 		const text = await rawSub.text();
+		return text;
+	} catch (err) {
+		console.log("-".repeat(25), "getting subtitles", "-".repeat(25));
+		console.log(err.message);
+		return null;
+	}
+};
+
+export default async (name, season, episode) => {
+	try {
+		const text = await getSubtitles(name, season, episode);
+		if (text === null) return null;
 		let subtitle = filterSubtitles(text);
 		let words = getWords(subtitle);
 		return { subtitle, words };
 	} catch (err) {
-		console.log(err);
+		console.log("-".repeat(25), "getEpisodeData", "-".repeat(25));
+		console.log(err.message);
 		return null;
 	}
 };

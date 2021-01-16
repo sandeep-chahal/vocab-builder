@@ -2,6 +2,9 @@ import getEpisodeData from "../../../services/getEpisodeData";
 import styles from "../../../styles/dashboard.module.css";
 
 const Dashboard = ({ error, subtitles, words }) => {
+	if (error) {
+		return <div>Something Went Wrong</div>;
+	}
 	const wordsList = Object.keys(words);
 	return (
 		<div className={styles.dashboard}>
@@ -25,13 +28,12 @@ export const getServerSideProps = async (context) => {
 	const { showId, season, episode } = context.query;
 	console.log(context.query);
 	let result = await getEpisodeData(showId, season, episode);
-	if (result)
-		return {
-			props: {
-				error: result === null,
-				...(result || {}),
-			},
-		};
+	return {
+		props: {
+			error: result === null,
+			...(result || {}),
+		},
+	};
 };
 
 export default Dashboard;
