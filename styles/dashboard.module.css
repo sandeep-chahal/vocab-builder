@@ -11,6 +11,7 @@
 	margin: 1rem;
 	width: 20%;
 	background: rgb(17, 17, 17);
+	cursor: pointer;
 }
 
 @media (max-width: 1000px) {
