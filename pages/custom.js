@@ -53,6 +53,11 @@ const Custom = () => {
 				return prev;
 			}
 		}, []);
+		data.push(
+			<span key="last_one" className={styles.line}>
+				{temp}
+			</span>
+		);
 		return <p className={styles.para}>{data}</p>;
 	}, [words, text]);
 
