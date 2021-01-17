@@ -1,16 +1,38 @@
+.dashboard {
+	width: 80%;
+	margin: auto;
+}
 .wordList {
 	font-size: 1.8rem;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: space-between;
 }
 
 .word {
 	display: block;
 	padding: 1rem 2rem;
 	margin: 1rem;
+	margin-left: 0rem;
 	width: 20%;
 	background: rgb(17, 17, 17);
+	cursor: pointer;
+}
+
+.meta {
+	text-align: center;
+	font-size: 1.6rem;
+}
+
+.header {
+	font-size: 2rem;
+	margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+}
+
+.change {
+	margin-left: 1rem;
 	cursor: pointer;
 }
 
@@ -20,12 +42,15 @@
 	}
 }
 @media (max-width: 700px) {
+	.header {
+		/* font-size: 2.5rem; */
+	}
 	.word {
 		width: 45%;
 	}
 }
 @media (max-width: 600px) {
 	.word {
-		width: 80%;
+		width: 100%;
 	}
 }

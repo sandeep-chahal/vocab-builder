@@ -21,6 +21,9 @@
 	border-radius: 1rem;
 	width: 300px;
 }
+.header {
+	font-size: 2.5rem;
+}
 .label {
 	margin: 1rem 0;
 }

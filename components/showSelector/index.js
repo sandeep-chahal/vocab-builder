@@ -3,14 +3,21 @@ import { useRouter } from "next/router";
 import { getShowInfo } from "../../utils/fetch";
 import styles from "./showSelector.module.css";
 
-const ShowSelector = ({ name, showId, cancel }) => {
+const ShowSelector = ({
+	name,
+	showId,
+	cancel,
+	defaultSeason = 1,
+	defaultEpisode = 1,
+}) => {
 	const [totalSeasons, setTotalSeasons] = useState(null);
-	const [season, setSeason] = useState(1);
-	const [episode, setEpisode] = useState(1);
+	const [season, setSeason] = useState(defaultSeason);
+	const [episode, setEpisode] = useState(defaultEpisode);
 	const router = useRouter();
 
 	useEffect(() => {
 		(async () => {
+			if (!showId) return;
 			const seasons = await getShowInfo(showId);
 			setTotalSeasons(seasons);
 		})();
@@ -19,6 +26,7 @@ const ShowSelector = ({ name, showId, cancel }) => {
 	return (
 		<div className={styles.selectorWrapper}>
 			<div className={styles.selector}>
+				<h2 className={styles.header}>{name}</h2>
 				<div className={styles.label}>
 					<label>Season</label>
 					{totalSeasons && <span>{`(1-${totalSeasons.length})`}</span>}
