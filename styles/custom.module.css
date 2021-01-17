@@ -1,0 +1,61 @@
+.custom {
+	width: 80%;
+	margin: auto;
+	margin-top: 5rem;
+}
+
+.inputWrapper {
+	width: 100%;
+	padding: 2rem;
+}
+
+.textarea {
+	width: 100%;
+	padding: 1rem;
+	font-size: 2rem;
+	margin-bottom: 2rem;
+	height: auto;
+}
+
+.button {
+	padding: 0.5rem 2rem;
+}
+.error {
+	font-size: 1.5rem;
+	margin: auto;
+}
+
+.para {
+	font-size: 2.2rem;
+	line-height: 3.5rem;
+}
+
+.learn,
+.word {
+	margin: 0 0.5rem;
+}
+.learn {
+	background-color: var(--color-secondary);
+	cursor: pointer;
+}
+.header {
+	font-size: 2.2rem;
+	margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+}
+
+.reset {
+	margin-left: 1rem;
+	cursor: pointer;
+}
+
+@media (max-width: 700px) {
+	.custom {
+		width: 90%;
+		margin-top: 3rem;
+	}
+	.header {
+		margin-bottom: 0.5rem;
+	}
+}

@@ -55,10 +55,10 @@ const Search = () => {
 					? searchedItems.map((item) => <Show key={item.id} show={item} />)
 					: null}
 
-				{searchedItems && !searchedItems.length ? (
+				{!loading && searchedItems && !searchedItems.length ? (
 					<div className={styles.meta}>not found!</div>
 				) : null}
-				{searchedItems ? null : (
+				{!loading && searchedItems ? null : (
 					<div className={styles.meta}>Search Any Tv Show!</div>
 				)}
 			</div>

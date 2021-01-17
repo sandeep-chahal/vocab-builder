@@ -19,3 +19,19 @@ export const searchShows = async (query) => {
 		return [];
 	}
 };
+
+export const getCustomData = async (text) => {
+	try {
+		const req = await fetch("/api/custom", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ text }),
+		});
+		const data = await req.json();
+		return data.words;
+	} catch (err) {
+		return null;
+	}
+};
