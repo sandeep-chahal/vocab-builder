@@ -1,0 +1,18 @@
+.dropdown {
+	z-index: 100;
+	width: 100%;
+	border-radius: 1rem;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: rgba(17, 17, 17);
+	display: flex;
+	flex-direction: column;
+	padding: 1rem 2rem;
+}
+.link {
+	margin: 1rem 0;
+	font-weight: 400;
+	display: flex;
+	align-items: center;
+}
