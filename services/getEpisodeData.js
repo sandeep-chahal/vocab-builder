@@ -26,7 +26,8 @@ const filterSubtitles = (text) => {
 				.split(" ")
 				.map((word) => word.replace(/[\?\!\"\-\.\,\']/g, "").trim())
 				.join(" ");
-		});
+		})
+		.filter((line) => line.trim().length);
 };
 
 const getWords = (subtitles) => {
@@ -73,7 +74,7 @@ export default async (name, season, episode) => {
 		if (text === null) return null;
 		let subtitle = filterSubtitles(text);
 		let words = getWords(subtitle);
-		return { words };
+		return { words, subtitle };
 	} catch (err) {
 		console.log("-".repeat(25), "getEpisodeData", "-".repeat(25));
 		console.log(err.message);
