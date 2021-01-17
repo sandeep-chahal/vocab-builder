@@ -55,6 +55,10 @@
 		width: 90%;
 		margin-top: 3rem;
 	}
+	.inputWrapper {
+		margin-top: 1rem;
+		padding: 0;
+	}
 	.header {
 		margin-bottom: 0.5rem;
 	}

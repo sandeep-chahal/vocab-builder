@@ -1,6 +1,7 @@
 .showWrapper {
 	position: relative;
 	width: 200px;
+	min-height: 300px;
 	display: flex;
 	flex-direction: column-reverse;
 	cursor: pointer;

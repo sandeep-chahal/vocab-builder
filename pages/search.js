@@ -58,9 +58,9 @@ const Search = () => {
 				{!loading && searchedItems && !searchedItems.length ? (
 					<div className={styles.meta}>not found!</div>
 				) : null}
-				{!loading && searchedItems ? null : (
+				{!loading && !searchedItems ? (
 					<div className={styles.meta}>Search Any Tv Show!</div>
-				)}
+				) : null}
 			</div>
 		</div>
 	);

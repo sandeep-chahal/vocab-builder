@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "../styles/custom.module.css";
 import DefinitionModal from "../components/definitionModal";
 import { getCustomData } from "../utils/fetch";
+import Head from "next/head";
 
 const Custom = () => {
 	const [loading, setLoading] = useState(false);
@@ -69,6 +70,9 @@ const Custom = () => {
 
 	return (
 		<div className={styles.custom}>
+			<Head>
+				<title>Custom Text</title>
+			</Head>
 			<h2 className={styles.header}>
 				<span>Custom Text</span>
 				{words && (
