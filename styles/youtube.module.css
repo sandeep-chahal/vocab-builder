@@ -8,6 +8,7 @@
 	width: 60%;
 	margin: auto;
 	margin-top: 5rem;
+	margin-bottom: 2rem;
 }
 
 .input {
@@ -40,6 +41,9 @@
 	}
 }
 @media (max-width: 900px) {
+	.inputWrapper {
+		width: 90%;
+	}
 	.youtube {
 		width: 90%;
 	}

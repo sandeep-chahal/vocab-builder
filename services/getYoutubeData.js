@@ -1,6 +1,7 @@
 import YTSubtitles from "youtube-subtitles-downloader";
 import getDictionary from "../utils/dictionary";
 import ignoreWords from "../config/ignorewords.json";
+import { getYtId } from "../utils";
 const dictionary = getDictionary();
 
 const filterWords = (subtitles) => {
@@ -39,7 +40,7 @@ const convertToArray = (subtitles) => {
 };
 
 export default async (url) => {
-	const videoId = url.split("watch?v=")[1].split("&")[0];
+	const videoId = getYtId(url);
 	console.log(videoId);
 	const resp = await YTSubtitles.getLanguagesList(videoId, "en");
 	if (!resp.length) return "Couldn't find subtitles for the video.";

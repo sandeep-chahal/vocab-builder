@@ -4,6 +4,7 @@ import YouTubePlayer from "react-youtube";
 import getYoutubeData from "../utils/getYoutbeData";
 import DefinitionModal from "../components/definitionModal";
 import Head from "next/head";
+import { getYtId } from "../utils";
 
 const Youtube = () => {
 	const [url, setUrl] = useState("");
@@ -114,10 +115,7 @@ const Youtube = () => {
 			{error && <div className={styles.info}>{error}</div>}
 			{ready && (
 				<div className={styles.main}>
-					<YouTubePlayer
-						className={styles.player}
-						videoId={url.split("=")[1].split("&")[0]}
-					/>
+					<YouTubePlayer className={styles.player} videoId={getYtId(url)} />
 					<div className={styles.vocab}>
 						<div className={styles.heading}>
 							<h2>{toggle ? "Subtitles" : "Words"}</h2>{" "}
