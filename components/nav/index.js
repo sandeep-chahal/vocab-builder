@@ -22,6 +22,9 @@ const Nav = () => {
 			</div>
 			{menuOpen && <DropDown close={() => setMenuOpen(false)} />}
 			<div className={styles.links}>
+				<Link href="/youtube">
+					<a className={styles.link}>Youtube</a>
+				</Link>
 				<Link href="/custom">
 					<a className={styles.link}>Custom</a>
 				</Link>

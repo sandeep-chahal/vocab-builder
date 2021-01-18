@@ -1,0 +1,148 @@
+.youtube {
+	width: 80%;
+	margin: auto;
+	font-size: 1.6rem;
+}
+
+.inputWrapper {
+	width: 60%;
+	margin: auto;
+	margin-top: 5rem;
+}
+
+.input {
+	width: 100%;
+	padding: 0.8rem;
+	font-size: 1.6rem;
+}
+.button {
+	margin-top: 2rem;
+	padding: 0.5rem 1rem;
+}
+
+.info {
+	text-align: center;
+	font-size: 2rem;
+}
+.main {
+	width: 100%;
+	height: 80vh;
+	display: flex;
+	justify-content: space-evenly;
+}
+.vocab {
+	width: 60%;
+	margin-left: 2rem;
+}
+@media (max-width: 1100px) {
+	.player {
+		width: 500px;
+	}
+}
+@media (max-width: 900px) {
+	.youtube {
+		width: 90%;
+	}
+	.main {
+		flex-direction: column;
+	}
+	.player {
+		width: 100%;
+		height: 25vh;
+		margin-bottom: 1rem;
+	}
+	.vocab {
+		height: 60vh;
+		width: 90%;
+	}
+	.words .learn {
+		width: 80%;
+	}
+}
+
+.heading {
+	display: flex;
+	align-items: center;
+}
+.wordCount {
+	margin-left: 1rem;
+}
+
+.words,
+.subtitles {
+	display: flex;
+	flex-wrap: wrap;
+	overflow-y: auto;
+	height: 90%;
+	line-height: 3rem;
+	font-size: 2rem;
+	margin-top: 1rem;
+}
+.words .learn {
+	min-width: 15rem;
+	padding: 0.5rem 1rem;
+	background-color: rgb(17, 17, 17);
+	margin: 1rem;
+}
+.learn {
+	cursor: pointer;
+}
+.subtitles .learn {
+	background-color: var(--color-secondary);
+	margin: 0 0.8rem;
+}
+
+.words::-webkit-scrollbar,
+.subtitles::-webkit-scrollbar {
+	width: 5px;
+}
+
+.words::-webkit-scrollbar-thumb,
+.subtitles::-webkit-scrollbar-thumb {
+	background-color: rgb(17, 17, 17);
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 2rem;
+	margin-left: 1rem;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	height: 2rem;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: var(--color-secondary);
+	transition: 0.4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 1rem;
+	width: 2rem;
+	left: 4px;
+	bottom: 5px;
+	background-color: white;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+
+.input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
