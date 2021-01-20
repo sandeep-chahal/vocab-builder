@@ -45,6 +45,10 @@
 	align-items: center;
 }
 
+.file {
+	margin-bottom: 2rem;
+}
+
 .reset {
 	margin-left: 1rem;
 	cursor: pointer;

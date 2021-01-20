@@ -1,11 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import styles from "../styles/custom.module.css";
 import DefinitionModal from "../components/definitionModal";
-import { getCustomData } from "../utils/fetch";
+import { getCustomData, uploadImage } from "../utils/fetch";
 import Head from "next/head";
 
 const Custom = () => {
 	const [loading, setLoading] = useState(false);
+	const [uploadingFile, setUploadingFile] = useState(false);
 	const [text, setText] = useState("");
 	const [words, setWords] = useState(null);
 	const [error, setError] = useState(false);
@@ -68,13 +69,35 @@ const Custom = () => {
 		setSelected(null);
 	};
 
+	const handleImageUpload = async (e) => {
+		if (loading) return;
+		setError(false);
+		setLoading(true);
+		setUploadingFile(true);
+		if (!e.target.files || !e.target.files[0].type.includes("image/")) {
+			setError("Please upload images only!");
+			setLoading(false);
+			setUploadingFile(false);
+			return;
+		}
+		const result = await uploadImage(e.target.files[0]);
+		if (result.error) {
+			setError(result.msg);
+		} else {
+			setText(result.text);
+			setWords(result.words);
+		}
+		setLoading(false);
+		setUploadingFile(false);
+	};
+
 	return (
 		<div className={styles.custom}>
 			<Head>
-				<title>Custom Text</title>
+				<title>Custom Text or Image</title>
 			</Head>
 			<h2 className={styles.header}>
-				<span>Custom Text</span>
+				<span>Custom Text or Image</span>
 				{words && (
 					<svg
 						onClick={handleReset}
@@ -94,6 +117,11 @@ const Custom = () => {
 			)}
 			{!words && (
 				<div className={styles.inputWrapper}>
+					<input
+						type="file"
+						className={styles.file}
+						onChange={handleImageUpload}
+					/>
 					<textarea
 						className={styles.textarea}
 						onChange={(e) => setText(e.target.value)}
@@ -105,11 +133,19 @@ const Custom = () => {
 						className={styles.button}
 						onClick={handleParseText}
 					>
-						{loading ? "Wait!" : "Go!"}
+						{loading
+							? uploadImage
+								? "This might take some time!"
+								: "Wait!"
+							: "Go!"}
 					</button>
 				</div>
 			)}
-			{error && <div className={styles.error}>Something Went Wrong!</div>}
+			{error && (
+				<div className={styles.error}>
+					{typeof error === "string" ? error : "Something Went Wrong!"}
+				</div>
+			)}
 			{words && renderPara}
 		</div>
 	);
