@@ -35,25 +35,3 @@ export const getCustomData = async (text) => {
 		return null;
 	}
 };
-
-export const uploadImage = async (file) => {
-	try {
-		const form = new FormData();
-		form.append("img", file);
-
-		const req = await fetch("/api/image", {
-			method: "POST",
-			// headers: {
-			// 	"Content-Type": "multipart/form-data",
-			// },
-			body: form,
-		});
-		const data = await req.json();
-		return data;
-	} catch (err) {
-		return {
-			error: true,
-			msg: "Something went wrong!",
-		};
-	}
-};

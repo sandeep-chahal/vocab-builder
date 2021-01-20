@@ -1,12 +1,13 @@
 import { useState, useMemo } from "react";
 import styles from "../styles/custom.module.css";
 import DefinitionModal from "../components/definitionModal";
-import { getCustomData, uploadImage } from "../utils/fetch";
+import { getCustomData } from "../utils/fetch";
 import Head from "next/head";
+import Tesseract from "tesseract.js";
 
 const Custom = () => {
 	const [loading, setLoading] = useState(false);
-	const [uploadingFile, setUploadingFile] = useState(false);
+	const [fileStatus, setFileStatus] = useState(null);
 	const [text, setText] = useState("");
 	const [words, setWords] = useState(null);
 	const [error, setError] = useState(false);
@@ -28,6 +29,7 @@ const Custom = () => {
 	const renderPara = useMemo(() => {
 		if (!words || !text) return null;
 		console.log("rendering para");
+
 		let temp = "";
 		const data = text.split(" ").reduce((prev, word, i) => {
 			const newWord = word.replace(".", " ").replace(",", " ").toLowerCase();
@@ -69,26 +71,31 @@ const Custom = () => {
 		setSelected(null);
 	};
 
-	const handleImageUpload = async (e) => {
+	const handleImage = async (e) => {
 		if (loading) return;
 		setError(false);
 		setLoading(true);
-		setUploadingFile(true);
 		if (!e.target.files || !e.target.files[0].type.includes("image/")) {
 			setError("Please upload images only!");
 			setLoading(false);
-			setUploadingFile(false);
 			return;
 		}
-		const result = await uploadImage(e.target.files[0]);
-		if (result.error) {
-			setError(result.msg);
-		} else {
-			setText(result.text);
-			setWords(result.words);
-		}
-		setLoading(false);
-		setUploadingFile(false);
+		// const result = await uploadImage(e.target.files[0]);
+		Tesseract.recognize(e.target.files[0], "eng", {
+			logger: (m) => {
+				console.log(m);
+				setFileStatus(m);
+			},
+		}).then(async ({ data: { text } }) => {
+			console.log(text);
+			setFileStatus(null);
+			const words = await getCustomData(text);
+			if (words) {
+				setText(text);
+				setWords(words);
+			} else setError(true);
+			setLoading(false);
+		});
 	};
 
 	return (
@@ -117,11 +124,7 @@ const Custom = () => {
 			)}
 			{!words && (
 				<div className={styles.inputWrapper}>
-					<input
-						type="file"
-						className={styles.file}
-						onChange={handleImageUpload}
-					/>
+					<input type="file" className={styles.file} onChange={handleImage} />
 					<textarea
 						className={styles.textarea}
 						onChange={(e) => setText(e.target.value)}
@@ -133,12 +136,14 @@ const Custom = () => {
 						className={styles.button}
 						onClick={handleParseText}
 					>
-						{loading
-							? uploadImage
-								? "This might take some time!"
-								: "Wait!"
-							: "Go!"}
+						{loading ? "Wait!" : "Go!"}
 					</button>
+					{fileStatus && (
+						<div className={styles.fileStatus}>
+							{fileStatus.status}: {(fileStatus.progress * 100).toFixed(2)}%
+							<span className={styles.wait}>This might take a while!</span>
+						</div>
+					)}
 				</div>
 			)}
 			{error && (
