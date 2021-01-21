@@ -35,3 +35,22 @@ export const getCustomData = async (text) => {
 		return null;
 	}
 };
+
+export const imageToText = async (img) => {
+	try {
+		const form = new FormData();
+		form.append("file", img);
+		form.append("apikey", process.env.NEXT_PUBLIC_APIKEY);
+		form.append("language", "eng");
+
+		const req = await fetch("https://api.ocr.space/parse/image", {
+			method: "POST",
+			body: form,
+		});
+		const res = await req.json();
+		return res.ParsedResults[0].ParsedText;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};

@@ -1,13 +1,13 @@
 import { useState, useMemo } from "react";
 import styles from "../styles/custom.module.css";
 import DefinitionModal from "../components/definitionModal";
-import { getCustomData } from "../utils/fetch";
+import { getCustomData, imageToText } from "../utils/fetch";
 import Head from "next/head";
-import Tesseract from "tesseract.js";
+import { reduceImageSize } from "../utils";
 
 const Custom = () => {
 	const [loading, setLoading] = useState(false);
-	const [fileStatus, setFileStatus] = useState(null);
+	const [fileProcessing, setFileProcessing] = useState(null);
 	const [text, setText] = useState("");
 	const [words, setWords] = useState(null);
 	const [error, setError] = useState(false);
@@ -73,6 +73,7 @@ const Custom = () => {
 
 	const handleImage = async (e) => {
 		if (loading) return;
+		setFileProcessing(true);
 		setError(false);
 		setLoading(true);
 		if (!e.target.files || !e.target.files[0].type.includes("image/")) {
@@ -80,24 +81,17 @@ const Custom = () => {
 			setLoading(false);
 			return;
 		}
-		// const result = await uploadImage(e.target.files[0]);
-		Tesseract.recognize(e.target.files[0], "eng", {
-			logger: (m) => {
-				console.log(m);
-				setFileStatus(m);
-			},
-		}).then(async ({ data: { text } }) => {
-			console.log(text);
-			setFileStatus(null);
-			const words = await getCustomData(text);
-			if (words) {
-				setText(text);
-				setWords(words);
-			} else setError(true);
-			setLoading(false);
-		});
+		const img = await reduceImageSize(e.target.files[0]);
+		const text = await imageToText(img);
+		const words = await getCustomData(text);
+		if (words) {
+			setText(text);
+			setWords(words);
+		} else setError(true);
+		setLoading(false);
+		setError(false);
+		setFileProcessing(false);
 	};
-
 	return (
 		<div className={styles.custom}>
 			<Head>
@@ -138,11 +132,8 @@ const Custom = () => {
 					>
 						{loading ? "Wait!" : "Go!"}
 					</button>
-					{fileStatus && (
-						<div className={styles.fileStatus}>
-							{fileStatus.status}: {(fileStatus.progress * 100).toFixed(2)}%
-							<span className={styles.wait}>This might take a while!</span>
-						</div>
+					{fileProcessing && (
+						<span className={styles.wait}>This might take a while!</span>
 					)}
 				</div>
 			)}
