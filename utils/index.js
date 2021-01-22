@@ -13,7 +13,8 @@ export const getYtId = (url) => {
 
 export const reduceImageSize = async (file) => {
 	console.log("original file:", file);
-	if (file.size / 1024 / 1024 < 1024) return file;
+	console.log(file.size / 1024 < 1024);
+	if (file.size < 1000) return file;
 	console.log("compressing");
 	const data = await compress.compress([file], {
 		size: 1,

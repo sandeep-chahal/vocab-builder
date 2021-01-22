@@ -48,6 +48,9 @@ export const imageToText = async (img) => {
 			body: form,
 		});
 		const res = await req.json();
+		if (res.ErrorMessage) {
+			alert(res.ErrorMessage[[0]]);
+		}
 		return res.ParsedResults[0].ParsedText;
 	} catch (err) {
 		console.log(err);

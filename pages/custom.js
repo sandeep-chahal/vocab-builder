@@ -79,6 +79,7 @@ const Custom = () => {
 		if (!e.target.files || !e.target.files[0].type.includes("image/")) {
 			setError("Please upload images only!");
 			setLoading(false);
+			setFileProcessing(false);
 			return;
 		}
 		const img = await reduceImageSize(e.target.files[0]);
