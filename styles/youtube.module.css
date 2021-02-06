@@ -68,6 +68,9 @@
 	display: flex;
 	align-items: center;
 }
+.reset {
+	margin-left: 1rem;
+}
 .wordCount {
 	margin-left: 1rem;
 }
@@ -78,7 +81,7 @@
 	flex-wrap: wrap;
 	overflow-y: auto;
 	height: 90%;
-	line-height: 3rem;
+	line-height: 4rem;
 	font-size: 2rem;
 	margin-top: 1rem;
 }
@@ -92,8 +95,14 @@
 	cursor: pointer;
 }
 .subtitles .learn {
-	background-color: var(--color-secondary);
+	color: var(--color-secondary);
+	color: #f9934c;
+	text-decoration: underline;
 	margin: 0 0.8rem;
+}
+.line {
+	display: block;
+	width: 100%;
 }
 
 .words::-webkit-scrollbar,

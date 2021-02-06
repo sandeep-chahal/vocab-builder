@@ -44,7 +44,7 @@ export default async (url) => {
 	console.log(videoId);
 	const resp = await YTSubtitles.getLanguagesList(videoId, "en");
 	if (!resp.length) return "Couldn't find subtitles for the video.";
-	let subtitles = await resp[0].fetch();
+	let subtitles = await resp.find((sub) => sub.languageCode === "en").fetch();
 	subtitles = convertToArray(subtitles);
 	const words = filterWords(subtitles);
 	return { subtitles, words };

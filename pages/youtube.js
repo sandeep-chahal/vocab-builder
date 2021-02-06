@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import styles from "../styles/youtube.module.css";
 import YouTubePlayer from "react-youtube";
 import getYoutubeData from "../utils/getYoutbeData";
@@ -19,6 +19,7 @@ const Youtube = () => {
 	const renderSubtitles = useMemo(() => {
 		if (!subtitles) return null;
 		let data = [];
+		let currentLine = [];
 		let temp = "";
 		subtitles.forEach((sub, i) => {
 			sub.text.split(" ").forEach((w) => {
@@ -30,29 +31,28 @@ const Youtube = () => {
 					.replace("-", "")
 					.toLowerCase();
 				if (word in words) {
-					data.push(
-						<span key={uuidv4()} className={styles.line}>
-							{temp}
-						</span>
-					);
-					data.push(
+					currentLine.push(<span key={uuidv4()}>{temp}</span>);
+					currentLine.push(
 						<span
 							onClick={() => setSelectedWord(word)}
 							key={uuidv4()}
 							className={styles.learn}
 						>
-							{word}
+							{w}
 						</span>
 					);
 					temp = "";
-				} else temp = temp + " " + word;
+				} else temp = temp + " " + w;
 			});
+			if (temp) currentLine.push(<span key={uuidv4()}>{temp}</span>);
+			data.push(
+				<div key={uuidv4()} className={styles.line}>
+					{currentLine}
+				</div>
+			);
+			currentLine = [];
+			temp = "";
 		});
-		data.push(
-			<span key="last_one" className={styles.line}>
-				{temp}
-			</span>
-		);
 		return data;
 	}, [subtitles]);
 
