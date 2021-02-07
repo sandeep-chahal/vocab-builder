@@ -16,6 +16,7 @@
     "opensubtitles-api": "^5.1.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-player": "^2.8.2",
     "react-window": "^1.8.6",
     "react-youtube": "^7.13.0",
     "typo-js": "^1.2.0",

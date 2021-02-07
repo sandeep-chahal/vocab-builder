@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
 import styles from "../styles/youtube.module.css";
-import YouTubePlayer from "react-youtube";
+import ReactPlayer from "react-player/youtube";
+
 import getYoutubeData from "../utils/getYoutbeData";
 import DefinitionModal from "../components/definitionModal";
 import Head from "next/head";
-import { getYtId } from "../utils";
 
 const Youtube = () => {
 	const [url, setUrl] = useState("");
@@ -15,6 +15,7 @@ const Youtube = () => {
 	const [words, setWords] = useState(null);
 	const [toggle, setToggle] = useState(false);
 	const [selectedWord, setSelectedWord] = useState(null);
+	const [elapsedTime, setElapsedTime] = useState(0);
 
 	const renderSubtitles = useMemo(() => {
 		if (!subtitles) return null;
@@ -38,18 +39,19 @@ const Youtube = () => {
 							key={uuidv4()}
 							className={styles.learn}
 						>
-							{w}
+							{" " + w + " "}
 						</span>
 					);
 					temp = "";
 				} else temp = temp + " " + w;
 			});
 			if (temp) currentLine.push(<span key={uuidv4()}>{temp}</span>);
-			data.push(
-				<div key={uuidv4()} className={styles.line}>
-					{currentLine}
-				</div>
-			);
+			data.push({
+				line: currentLine,
+				key: uuidv4(),
+				duration: parseFloat(sub.duration),
+				start: parseFloat(sub.start),
+			});
 			currentLine = [];
 			temp = "";
 		});
@@ -87,6 +89,11 @@ const Youtube = () => {
 		setToggle(null);
 		setSelectedWord(null);
 	};
+
+	const handleProgressChange = (state) => {
+		setElapsedTime(state.playedSeconds);
+	};
+
 	return (
 		<div className={styles.youtube}>
 			<Head>
@@ -115,7 +122,16 @@ const Youtube = () => {
 			{error && <div className={styles.info}>{error}</div>}
 			{ready && (
 				<div className={styles.main}>
-					<YouTubePlayer className={styles.player} videoId={getYtId(url)} />
+					<div className={styles.player}>
+						<ReactPlayer
+							width="100%"
+							height="100%"
+							playing={!selectedWord}
+							url={url}
+							onProgress={handleProgressChange}
+							onPlay={(e) => console.log(e)}
+						/>
+					</div>
 					<div className={styles.vocab}>
 						<div className={styles.heading}>
 							<h2>{toggle ? "Subtitles" : "Words"}</h2>{" "}
@@ -150,7 +166,35 @@ const Youtube = () => {
 								))}
 							</div>
 						)}
-						{toggle && <p className={styles.subtitles}>{renderSubtitles}</p>}
+						{toggle && (
+							<p className={styles.subtitles}>
+								{renderSubtitles.map((sub) => {
+									const active =
+										sub.start <= elapsedTime &&
+										sub.duration + sub.start >= elapsedTime;
+									return (
+										<span
+											ref={(ref) =>
+												ref &&
+												active &&
+												!selectedWord &&
+												ref.scrollIntoView({
+													behavior: "smooth",
+												})
+											}
+											style={{
+												textDecoration: active ? "underline" : "none",
+												opacity: active ? 1 : 0.8,
+											}}
+											className={styles.line}
+											key={sub.key}
+										>
+											{sub.line}
+										</span>
+									);
+								})}
+							</p>
+						)}
 					</div>
 				</div>
 			)}
