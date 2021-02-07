@@ -15,7 +15,7 @@
 	margin: 1rem;
 	margin-left: 0rem;
 	width: 20%;
-	background: rgb(17, 17, 17);
+	background: rgb(216, 216, 216);
 	cursor: pointer;
 }
 
@@ -50,7 +50,7 @@
 	height: 75vh;
 }
 .learn {
-	background-color: var(--color-secondary);
+	color: var(--color-secondary);
 	margin: 0 0.5rem;
 	cursor: pointer;
 }

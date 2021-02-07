@@ -66,7 +66,7 @@
 .words .learn {
 	min-width: 15rem;
 	padding: 0.5rem 1rem;
-	background-color: rgb(17, 17, 17);
+	background-color: var(--color-primary-2);
 	margin: 1rem;
 }
 .learn {
@@ -74,7 +74,6 @@
 }
 .subtitles .learn {
 	color: var(--color-secondary);
-	color: #f9934c;
 	margin: 0 0.8rem;
 }
 .line {
@@ -90,7 +89,7 @@
 
 .words::-webkit-scrollbar-thumb,
 .subtitles::-webkit-scrollbar-thumb {
-	background-color: rgb(17, 17, 17);
+	background-color: var(--color-primary-2);
 }
 
 .switch {

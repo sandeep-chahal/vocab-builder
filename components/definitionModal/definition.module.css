@@ -27,7 +27,7 @@
 
 .dictionary {
 	width: 60vw;
-	background: rgb(17, 17, 17);
+	background: var(--color-primary-2);
 	margin-top: 3rem;
 }
 

@@ -105,7 +105,7 @@ const Custom = () => {
 						onClick={handleReset}
 						className={styles.reset}
 						xmlns="http://www.w3.org/2000/svg"
-						fill="#fff"
+						fill="#000"
 						viewBox="0 0 50 50"
 						width="20px"
 						height="20px"

@@ -14,7 +14,7 @@
 	padding: 1rem;
 	font-size: 2rem;
 	margin-bottom: 2rem;
-	height: auto;
+	min-height: 30vh;
 }
 
 .button {
@@ -36,7 +36,7 @@
 	margin: 0 0.5rem;
 }
 .learn {
-	background-color: var(--color-secondary);
+	color: var(--color-secondary);
 	cursor: pointer;
 }
 .header {

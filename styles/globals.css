@@ -1,15 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap");
 
 :root {
-	--color-primary: #181712;
-	--color-secondary: #e02929;
+	--color-primary: #fff;
+	--color-primary-2: rgb(218, 218, 218);
+	--color-secondary: #ff8731;
 }
 html,
 body {
 	font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
 		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	background: var(--color-primary);
-	color: #fff;
+	color: rgb(22, 22, 22);
 	font-size: 62.5%;
 	overflow-x: hidden;
 }

@@ -97,7 +97,7 @@ const Dashboard = ({ error, subtitle, words, name, season, episode }) => {
 						onClick={() => setChange(true)}
 						className={styles.change}
 						xmlns="http://www.w3.org/2000/svg"
-						fill="#fff"
+						fill="#000"
 						viewBox="0 0 50 50"
 						width="20px"
 						height="20px"
