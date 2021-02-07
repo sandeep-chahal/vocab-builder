@@ -129,7 +129,7 @@ const Youtube = () => {
 							playing={!selectedWord}
 							url={url}
 							onProgress={handleProgressChange}
-							onPlay={(e) => console.log(e)}
+							controls={true}
 						/>
 					</div>
 					<div className={styles.vocab}>
