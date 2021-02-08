@@ -2,7 +2,7 @@
 
 :root {
 	--color-primary: #fff;
-	--color-primary-2: rgb(218, 218, 218);
+	--color-primary-2: rgb(230, 230, 230);
 	--color-secondary: #ff8731;
 }
 html,
@@ -14,7 +14,17 @@ body {
 	font-size: 62.5%;
 	overflow-x: hidden;
 }
-
+#nprogress .bar {
+	background: var(--color-secondary) !important;
+	box-shadow: 0px 5px 10px var(--color-secondary);
+}
+#nprogress .spinner-icon {
+	border-top-color: var(--color-secondary) !important;
+	border-left-color: var(--color-secondary) !important;
+}
+#nprogress .bar .peg {
+	box-shadow: 0 0 10px var(--color-secondary), 0 0 5px var(--color-secondary);
+}
 a {
 	color: inherit;
 	text-decoration: none;

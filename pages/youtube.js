@@ -1,13 +1,15 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import styles from "../styles/youtube.module.css";
 import ReactPlayer from "react-player/youtube";
 
 import getYoutubeData from "../utils/getYoutbeData";
 import DefinitionModal from "../components/definitionModal";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const Youtube = () => {
-	const [url, setUrl] = useState("");
+	const router = useRouter();
+	const [url, setUrl] = useState(router.query.url || "");
 	const [loading, setLoading] = useState(false);
 	const [ready, setReady] = useState(false);
 	const [error, setError] = useState(null);
@@ -58,20 +60,27 @@ const Youtube = () => {
 		return data;
 	}, [subtitles]);
 
+	useEffect(() => {
+		if (!router.query.url) return;
+		(async () => {
+			setLoading(true);
+			setError(null);
+			const result = await getYoutubeData(router.query.url);
+			console.log(error);
+			if (result.error) {
+				setError(result.msg);
+			} else {
+				setWords(result.words);
+				setSubtitles(result.subtitles);
+				setReady(true);
+			}
+			setLoading(false);
+		})();
+	}, [router.query.url]);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true);
-		setError(null);
-		const result = await getYoutubeData(url);
-		console.log(error);
-		if (result.error) {
-			setError(result.msg);
-		} else {
-			setWords(result.words);
-			setSubtitles(result.subtitles);
-			setReady(true);
-		}
-		setLoading(false);
+		router.push("?url=" + url);
 	};
 
 	const totalWords = useMemo(() => Object.keys(words || {}).length, [words]);
@@ -88,6 +97,7 @@ const Youtube = () => {
 		setWords(null);
 		setToggle(null);
 		setSelectedWord(null);
+		router.push("?url=");
 	};
 
 	const handleProgressChange = (state) => {
@@ -112,6 +122,7 @@ const Youtube = () => {
 						className={styles.input}
 						placeholder="Enter youtube video url"
 						onChange={(e) => setUrl(e.target.value)}
+						value={url}
 					/>
 					<button className={styles.button} type="submit">
 						Go Get It!
