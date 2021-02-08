@@ -15,7 +15,7 @@ const Youtube = () => {
 	const [error, setError] = useState(null);
 	const [subtitles, setSubtitles] = useState(null);
 	const [words, setWords] = useState(null);
-	const [toggle, setToggle] = useState(false);
+	const [toggle, setToggle] = useState(true);
 	const [selectedWord, setSelectedWord] = useState(null);
 	const [elapsedTime, setElapsedTime] = useState(0);
 
