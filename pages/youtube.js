@@ -138,7 +138,7 @@ const Youtube = () => {
 							width="100%"
 							height="100%"
 							playing={!selectedWord}
-							url={url}
+							url={router.query.url}
 							onProgress={handleProgressChange}
 							controls={true}
 						/>
