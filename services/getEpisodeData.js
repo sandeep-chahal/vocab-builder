@@ -21,20 +21,26 @@ const filterSubtitles = (text) => {
 			return true;
 		})
 		.map((line) => {
-			const newLine = line.replace(/<\/?[^>]+(>|$)/g, "").replace("\r", "");
-			return newLine
-				.split(" ")
-				.map((word) => word.replace(/[\?\!\"\-\.\,\']/g, "").trim())
-				.join(" ");
-		})
-		.filter((line) => line.trim().length);
+			// const newLine = line.replace(/<\/?[^>]+(>|$)/g, "").replace("\r", "");
+			const newLine = line.replace("\r", "");
+			return (
+				newLine
+					.split(" ")
+					// .map((word) => word.replace(/[\?\!\"\-\.\,\']/g, "").trim())
+					.join(" ")
+			);
+		});
+	// .filter((line) => line.trim().length);
 };
 
 const getWords = (subtitles) => {
 	let words = {};
 	subtitles.map((line) => {
 		line.split(" ").map((w) => {
-			const word = w.toLowerCase();
+			const word = w
+				.replace(/[\?\!\"\-\.\,\']/g, "")
+				.trim()
+				.toLowerCase();
 			if (!ignoreWords[word] && dictionary.check(word) && word.length > 3) {
 				words[word] = true;
 			}

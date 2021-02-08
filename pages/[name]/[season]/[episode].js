@@ -4,8 +4,6 @@ import getEpisodeData from "../../../services/getEpisodeData";
 import styles from "../../../styles/dashboard.module.css";
 import DefinitionModal from "../../../components/definitionModal";
 import ShowSelector from "../../../components/showSelector";
-// import { FixedSizeList as List } from "react-window";
-// import AutoSizer from "react-virtualized-auto-sizer";
 
 const Dashboard = ({ error, subtitle, words, name, season, episode }) => {
 	if (error) {
@@ -22,50 +20,54 @@ const Dashboard = ({ error, subtitle, words, name, season, episode }) => {
 		setSelectedWord(word);
 	};
 
-	const handleWordSelect = (e) => {
-		setSelectedWord(e.target.textContent);
+	const handleWordSelect = (word) => {
+		setSelectedWord(word);
 	};
 
 	const formattedSubs = useMemo(() => {
 		console.log("generating subtitles");
-		let key = 0;
 		let temp = "";
-		let result = subtitle.reduce((prev, line, i) => {
+		let currentLine = [];
+		let result = [];
+		subtitle.forEach((line, i) => {
 			line.split(" ").forEach((word) => {
-				if (word.toLowerCase() in words) {
-					prev.push(
-						<span key={key} className={styles.line}>
+				let newWord = word
+					.replace(/[\?\!\"\-\.\,\']/g, "")
+					.trim()
+					.toLowerCase();
+
+				if (newWord in words) {
+					currentLine.push(
+						<span key={uuidv4()} className={styles.line}>
 							{temp}
 						</span>
 					);
-					key++;
-					prev.push(
-						<span key={key} className={styles.learn} onClick={handleWordSelect}>
+					currentLine.push(
+						<span
+							key={uuidv4()}
+							className={styles.learn}
+							onClick={() => handleWordSelect(newWord)}
+						>
 							{word}
 						</span>
 					);
-					key++;
 					temp = "";
 				} else temp = temp + " " + word;
 			});
 			if (temp.trim()) {
-				prev.push(
-					<span key={key} className={styles.line}>
+				currentLine.push(
+					<span key={uuidv4()} className={styles.line}>
 						{temp}
 					</span>
 				);
-				key++;
-				prev.push(<br key={key} />);
-				key++;
 				temp = "";
 			}
-			return prev;
+			result.push({
+				key: uuidv4(),
+				line: currentLine,
+			});
+			currentLine = [];
 		}, []);
-		result.push(
-			<span key="last_one" className={styles.line}>
-				{temp}
-			</span>
-		);
 		return result;
 	}, []);
 
@@ -129,19 +131,9 @@ const Dashboard = ({ error, subtitle, words, name, season, episode }) => {
 			)}
 			{toggle && (
 				<p className={styles.subtitles}>
-					{formattedSubs}
-					{/* <AutoSizer>
-						{({ height, width }) => (
-							<List
-								height={height}
-								width={width}
-								itemCount={formattedSubs.length}
-								itemSize={10}
-							>
-								{({ index }) => formattedSubs[index]}
-							</List>
-						)}
-					</AutoSizer> */}
+					{formattedSubs.map((sub) => (
+						<div key={sub.key}>{sub.line}</div>
+					))}
 				</p>
 			)}
 		</div>
@@ -163,3 +155,10 @@ export const getServerSideProps = async (context) => {
 };
 
 export default Dashboard;
+function uuidv4() {
+	return "xxxxxxxxx".replace(/[xy]/g, function (c) {
+		var r = (Math.random() * 16) | 0,
+			v = c == "x" ? r : (r & 0x3) | 0x8;
+		return v.toString(16);
+	});
+}
