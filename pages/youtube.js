@@ -18,6 +18,7 @@ const Youtube = () => {
 	const [toggle, setToggle] = useState(true);
 	const [selectedWord, setSelectedWord] = useState(null);
 	const [elapsedTime, setElapsedTime] = useState(0);
+	const [playing, setPlaying] = useState(false);
 
 	const renderSubtitles = useMemo(() => {
 		if (!subtitles) return null;
@@ -137,10 +138,12 @@ const Youtube = () => {
 						<ReactPlayer
 							width="100%"
 							height="100%"
-							playing={!selectedWord}
+							playing={!selectedWord && playing}
 							url={router.query.url}
 							onProgress={handleProgressChange}
 							controls={true}
+							onPlay={() => setPlaying(true)}
+							onPause={() => setPlaying(false)}
 						/>
 					</div>
 					<div className={styles.vocab}>
